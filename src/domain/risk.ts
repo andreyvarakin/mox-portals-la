@@ -2,8 +2,8 @@
 export type RiskLevel = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
 
 /**
- * Значения отдельных факторов риска.
- * Смысл и шкала значений определяются вместе с формулой расчёта.
+ * Нормализованные компоненты риска 0–100 до применения весов.
+ * Формула — в calculateRisk (riskEngine.ts).
  */
 export interface RiskFactors {
   stability: number
@@ -11,10 +11,7 @@ export interface RiskFactors {
   collapseTime: number
 }
 
-/**
- * Результат расчёта риска портала.
- * Только контракт: сам расчёт пока не реализован.
- */
+/** Результат расчёта риска портала, см. calculateRisk. */
 export interface RiskResult {
   score: number
   level: RiskLevel
