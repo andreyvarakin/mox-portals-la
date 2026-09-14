@@ -1,3 +1,5 @@
+export type { ActionAvailability, ActionResult, ExecuteActionOptions } from './action.ts'
+export { executePortalAction, getActionAvailability } from './actionEngine.ts'
 export type { PortalAction, PortalEvent } from './event.ts'
 export type { Portal, PortalStatus } from './portal.ts'
 export type { RiskFactors, RiskLevel, RiskResult } from './risk.ts'
