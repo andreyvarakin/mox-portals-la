@@ -1,5 +1,7 @@
+import { DashboardPage } from './pages/DashboardPage.tsx'
+
 function App() {
-  return <h1>Portal Control Center</h1>
+  return <DashboardPage />
 }
 
 export default App
