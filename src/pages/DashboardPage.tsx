@@ -6,6 +6,7 @@ import {
   type PortalCommand,
 } from '../application/index.ts'
 import { AttentionList } from '../components/AttentionList.tsx'
+import { GlobalEventLog } from '../components/GlobalEventLog.tsx'
 import type { PendingConfirmation } from '../components/PortalActions.tsx'
 import { PortalDetails } from '../components/PortalDetails.tsx'
 import { PortalTable } from '../components/PortalTable.tsx'
@@ -139,6 +140,8 @@ export function DashboardPage() {
             />
           </div>
         </section>
+
+        <GlobalEventLog events={state.events} portals={state.portals} />
       </main>
     </div>
   )

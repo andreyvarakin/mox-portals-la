@@ -1,12 +1,6 @@
 import type { RiskLevel } from '../domain/index.ts'
 import { formatOutOf100 } from './formatters.ts'
-
-const RISK_LEVEL_LABELS: Record<RiskLevel, string> = {
-  LOW: 'Низкий',
-  MEDIUM: 'Средний',
-  HIGH: 'Высокий',
-  CRITICAL: 'Критический',
-}
+import { RISK_LEVEL_LABELS } from './labels.ts'
 
 interface RiskBadgeProps {
   level: RiskLevel

@@ -7,7 +7,8 @@ export interface PendingConfirmation {
   warning: string
 }
 
-const ACTION_LABELS: Record<PortalAction, string> = {
+/** Подписи кнопок — глаголы. Названия событий для журнала — в labels.ts. */
+const ACTION_BUTTON_LABELS: Record<PortalAction, string> = {
   STABILIZE: 'Стабилизировать',
   SEND_OBSERVER: 'Отправить наблюдателя',
   MARK_QUESTIONABLE: 'Пометить как «под вопросом»',
@@ -79,7 +80,7 @@ export function PortalActions({
               disabled={isBlocked}
               onClick={() => onAction(action)}
             >
-              {ACTION_LABELS[action]}
+              {ACTION_BUTTON_LABELS[action]}
             </button>
             {availability.kind === 'BLOCKED' && (
               <p className="action__reason">{availability.reason}</p>
