@@ -140,14 +140,6 @@ describe('Выбор портала и карточка', () => {
     ).toBeInTheDocument()
   })
 
-  it('после выбора кнопок действий по-прежнему нет', () => {
-    render(<App />)
-    selectFromTable('Врата Бездны')
-
-    for (const name of ['Стабилизировать', 'Закрыть портал', 'Отправить наблюдателя']) {
-      expect(screen.queryByRole('button', { name })).toBeNull()
-    }
-  })
 })
 
 describe('PortalHistory', () => {

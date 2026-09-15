@@ -568,6 +568,103 @@ button:focus-visible,
   border-left-color: var(--risk-low);
 }
 
+/* Действия */
+
+.inspector__actions {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.action-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.action {
+  display: grid;
+  gap: 4px;
+}
+
+/* Разрушительное действие отделено от остальных, а не только окрашено. */
+.action--danger {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+.action-button {
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.action-button:hover:not(:disabled) {
+  background: #212b37;
+  border-color: var(--text-muted);
+}
+
+.action-button--danger {
+  color: var(--risk-critical);
+  border-color: rgba(255, 123, 114, 0.55);
+}
+
+.action-button--danger:hover:not(:disabled) {
+  background: var(--risk-critical-bg);
+  border-color: var(--risk-critical);
+}
+
+.action-button:disabled {
+  color: var(--text-muted);
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border);
+  cursor: not-allowed;
+}
+
+.action__reason {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.confirmation {
+  padding: 12px 14px;
+  background: var(--risk-medium-bg);
+  border: 1px solid rgba(227, 179, 65, 0.55);
+  border-left: 4px solid var(--risk-medium);
+  border-radius: 6px;
+}
+
+.confirmation__title {
+  margin: 0 0 4px;
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.confirmation__warning {
+  margin: 0 0 12px;
+}
+
+.confirmation__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 12rem: в узкой карточке кнопки встают друг под другом, а не переносят текст. */
+.confirmation__buttons .action-button {
+  flex: 1 1 12rem;
+}
+
 .history-list {
   display: grid;
   gap: 12px;

@@ -1,18 +1,39 @@
-import { useState } from 'react'
-import { createInitialPortalState, getPortalSummary } from '../application/index.ts'
+import { useReducer, useState } from 'react'
+import {
+  applyPortalCommand,
+  createInitialPortalState,
+  getPortalSummary,
+  type PortalCommand,
+} from '../application/index.ts'
 import { AttentionList } from '../components/AttentionList.tsx'
+import type { PendingConfirmation } from '../components/PortalActions.tsx'
 import { PortalDetails } from '../components/PortalDetails.tsx'
 import { PortalTable } from '../components/PortalTable.tsx'
 import { SummaryCards } from '../components/SummaryCards.tsx'
 import { demoPortals } from '../data/index.ts'
+import { getActionAvailability, type PortalAction } from '../domain/index.ts'
 
-// Действий пока нет: состояние порталов создаётся один раз и не меняется.
-const initialState = createInitialPortalState(demoPortals)
+/**
+ * Граница интерфейса: только здесь появляются случайный id события и текущее время.
+ * Application и domain layers остаются детерминированными.
+ */
+function createCommand(portalId: string, action: PortalAction, confirmed?: boolean): PortalCommand {
+  return {
+    portalId,
+    action,
+    confirmed,
+    eventId: crypto.randomUUID(),
+    timestamp: new Date().toISOString(),
+  }
+}
 
 export function DashboardPage() {
-  const state = initialState
-  // Выбор портала — состояние интерфейса, в PortalAppState не попадает.
+  // Редьюсер — сама applyPortalCommand: логика целиком в application layer.
+  // demoPortals — только начальные данные, дальше всё берётся из state.
+  const [state, dispatch] = useReducer(applyPortalCommand, demoPortals, createInitialPortalState)
+  // Выбор и незавершённое подтверждение — состояние интерфейса, в PortalAppState не попадают.
   const [selectedPortalId, setSelectedPortalId] = useState<string | null>(null)
+  const [pendingConfirmation, setPendingConfirmation] = useState<PendingConfirmation | null>(null)
 
   const summary = getPortalSummary(state.portals)
   const selectedPortal =
@@ -23,6 +44,45 @@ export function DashboardPage() {
     ? state.events.filter((event) => event.portalId === selectedPortal.id)
     : []
   const activePortalId = selectedPortal?.id ?? null
+  const visibleConfirmation =
+    pendingConfirmation !== null && pendingConfirmation.portalId === activePortalId
+      ? pendingConfirmation
+      : null
+
+  function handleSelectPortal(portalId: string) {
+    if (portalId !== selectedPortalId) {
+      setPendingConfirmation(null)
+    }
+    setSelectedPortalId(portalId)
+  }
+
+  function handleAction(action: PortalAction) {
+    if (!selectedPortal) return
+
+    const availability = getActionAvailability(selectedPortal, action)
+    // Команда уходит в application layer в любом случае: запрос подтверждения
+    // тоже записывается в журнал, портал при этом не меняется.
+    dispatch(createCommand(selectedPortal.id, action))
+
+    if (availability.kind === 'REQUIRES_CONFIRMATION' && action === 'CLOSE') {
+      setPendingConfirmation({
+        portalId: selectedPortal.id,
+        action,
+        warning: availability.warning,
+      })
+    }
+  }
+
+  function handleConfirm() {
+    if (!visibleConfirmation) return
+
+    dispatch(createCommand(visibleConfirmation.portalId, visibleConfirmation.action, true))
+    setPendingConfirmation(null)
+  }
+
+  function handleCancelConfirmation() {
+    setPendingConfirmation(null)
+  }
 
   return (
     <div className="page">
@@ -52,7 +112,7 @@ export function DashboardPage() {
               items={summary.attention}
               portals={state.portals}
               selectedPortalId={activePortalId}
-              onSelectPortal={setSelectedPortalId}
+              onSelectPortal={handleSelectPortal}
             />
           </div>
         </section>
@@ -66,10 +126,17 @@ export function DashboardPage() {
               <PortalTable
                 portals={state.portals}
                 selectedPortalId={activePortalId}
-                onSelectPortal={setSelectedPortalId}
+                onSelectPortal={handleSelectPortal}
               />
             </div>
-            <PortalDetails portal={selectedPortal} events={selectedEvents} />
+            <PortalDetails
+              portal={selectedPortal}
+              events={selectedEvents}
+              pendingConfirmation={visibleConfirmation}
+              onAction={handleAction}
+              onConfirm={handleConfirm}
+              onCancelConfirmation={handleCancelConfirmation}
+            />
           </div>
         </section>
       </main>

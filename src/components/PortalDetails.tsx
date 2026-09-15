@@ -2,10 +2,12 @@ import {
   calculateRisk,
   getPortalRecommendation,
   type Portal,
+  type PortalAction,
   type PortalEvent,
   type RiskFactors,
 } from '../domain/index.ts'
 import { formatCollapseMinutes, formatOutOf100 } from './formatters.ts'
+import { PortalActions, type PendingConfirmation } from './PortalActions.tsx'
 import { PortalHistory } from './PortalHistory.tsx'
 import { RiskBadge } from './RiskBadge.tsx'
 import { StatusBadge } from './StatusBadge.tsx'
@@ -22,9 +24,21 @@ interface PortalDetailsProps {
   portal: Portal | undefined
   /** События только этого портала. */
   events: readonly PortalEvent[]
+  /** Подтверждение закрытия для этого портала или null. */
+  pendingConfirmation: PendingConfirmation | null
+  onAction: (action: PortalAction) => void
+  onConfirm: () => void
+  onCancelConfirmation: () => void
 }
 
-export function PortalDetails({ portal, events }: PortalDetailsProps) {
+export function PortalDetails({
+  portal,
+  events,
+  pendingConfirmation,
+  onAction,
+  onConfirm,
+  onCancelConfirmation,
+}: PortalDetailsProps) {
   if (!portal) {
     return (
       <aside className="inspector" aria-labelledby="inspector-label">
@@ -119,6 +133,17 @@ export function PortalDetails({ portal, events }: PortalDetailsProps) {
       >
         <h4>Рекомендация</h4>
         <p className="inspector__text">{recommendation.message}</p>
+      </section>
+
+      <section className="inspector__section inspector__actions">
+        <h4>Действия</h4>
+        <PortalActions
+          portal={portal}
+          pendingConfirmation={pendingConfirmation}
+          onAction={onAction}
+          onConfirm={onConfirm}
+          onCancelConfirmation={onCancelConfirmation}
+        />
       </section>
 
       <section className="inspector__section">
