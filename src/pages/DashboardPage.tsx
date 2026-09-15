@@ -1,15 +1,28 @@
+import { useState } from 'react'
 import { createInitialPortalState, getPortalSummary } from '../application/index.ts'
 import { AttentionList } from '../components/AttentionList.tsx'
+import { PortalDetails } from '../components/PortalDetails.tsx'
 import { PortalTable } from '../components/PortalTable.tsx'
 import { SummaryCards } from '../components/SummaryCards.tsx'
 import { demoPortals } from '../data/index.ts'
 
-// Интерфейс пока только для просмотра: состояние создаётся один раз и не меняется.
+// Действий пока нет: состояние порталов создаётся один раз и не меняется.
 const initialState = createInitialPortalState(demoPortals)
 
 export function DashboardPage() {
   const state = initialState
+  // Выбор портала — состояние интерфейса, в PortalAppState не попадает.
+  const [selectedPortalId, setSelectedPortalId] = useState<string | null>(null)
+
   const summary = getPortalSummary(state.portals)
+  const selectedPortal =
+    selectedPortalId === null
+      ? undefined
+      : state.portals.find((portal) => portal.id === selectedPortalId)
+  const selectedEvents = selectedPortal
+    ? state.events.filter((event) => event.portalId === selectedPortal.id)
+    : []
+  const activePortalId = selectedPortal?.id ?? null
 
   return (
     <div className="page">
@@ -35,7 +48,12 @@ export function DashboardPage() {
             Требуют внимания
           </h2>
           <div className="panel">
-            <AttentionList items={summary.attention} portals={state.portals} />
+            <AttentionList
+              items={summary.attention}
+              portals={state.portals}
+              selectedPortalId={activePortalId}
+              onSelectPortal={setSelectedPortalId}
+            />
           </div>
         </section>
 
@@ -43,8 +61,15 @@ export function DashboardPage() {
           <h2 id="portals-title" className="section-title">
             Все порталы
           </h2>
-          <div className="panel">
-            <PortalTable portals={state.portals} />
+          <div className="workspace">
+            <div className="panel">
+              <PortalTable
+                portals={state.portals}
+                selectedPortalId={activePortalId}
+                onSelectPortal={setSelectedPortalId}
+              />
+            </div>
+            <PortalDetails portal={selectedPortal} events={selectedEvents} />
           </div>
         </section>
       </main>

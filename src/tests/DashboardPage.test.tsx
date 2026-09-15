@@ -67,11 +67,11 @@ describe('Dashboard: только просмотр', () => {
     })
   })
 
-  it('кнопок действий пока нет', () => {
+  it('кнопок действий пока нет — только кнопки выбора порталов', () => {
     render(<App />)
 
-    expect(screen.queryAllByRole('button')).toHaveLength(0)
-    for (const label of ['Стабилизировать', 'Закрыть', 'Отправить наблюдателя']) {
+    for (const label of ['Стабилизировать', 'Закрыть', 'Закрыть портал', 'Отправить наблюдателя']) {
+      expect(screen.queryByRole('button', { name: label })).toBeNull()
       expect(screen.queryByText(label)).toBeNull()
     }
   })
@@ -79,14 +79,14 @@ describe('Dashboard: только просмотр', () => {
 
 describe('Компоненты на пустых данных', () => {
   it('PortalTable без порталов показывает сообщение вместо таблицы', () => {
-    render(<PortalTable portals={[]} />)
+    render(<PortalTable portals={[]} selectedPortalId={null} onSelectPortal={() => {}} />)
 
     expect(screen.getByText('Порталов пока нет.')).toBeInTheDocument()
     expect(screen.queryByRole('table')).toBeNull()
   })
 
   it('AttentionList без элементов показывает сообщение вместо списка', () => {
-    render(<AttentionList items={[]} portals={[]} />)
+    render(<AttentionList items={[]} portals={[]} selectedPortalId={null} onSelectPortal={() => {}} />)
 
     expect(screen.getByText('Порталы, требующие внимания, отсутствуют.')).toBeInTheDocument()
     expect(screen.queryByRole('list')).toBeNull()

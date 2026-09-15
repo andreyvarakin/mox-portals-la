@@ -1,21 +1,15 @@
-import { calculateRisk, type Portal, type PortalStatus } from '../domain/index.ts'
+import { calculateRisk, type Portal } from '../domain/index.ts'
+import { formatCollapseMinutes } from './formatters.ts'
 import { RiskBadge } from './RiskBadge.tsx'
-
-const STATUS_LABELS: Record<PortalStatus, string> = {
-  OPEN: 'Открыт',
-  QUESTIONABLE: 'Под вопросом',
-  CLOSED: 'Закрыт',
-}
-
-function formatCollapseMinutes(minutes: number | null): string {
-  return minutes === null ? '—' : `${minutes} мин`
-}
+import { StatusBadge } from './StatusBadge.tsx'
 
 interface PortalTableProps {
   portals: readonly Portal[]
+  selectedPortalId: string | null
+  onSelectPortal: (portalId: string) => void
 }
 
-export function PortalTable({ portals }: PortalTableProps) {
+export function PortalTable({ portals, selectedPortalId, onSelectPortal }: PortalTableProps) {
   if (portals.length === 0) {
     return <p className="empty-message">Порталов пока нет.</p>
   }
@@ -39,21 +33,35 @@ export function PortalTable({ portals }: PortalTableProps) {
         <tbody>
           {portals.map((portal) => {
             const risk = calculateRisk(portal)
-            const status = portal.status.toLowerCase()
+            const isSelected = portal.id === selectedPortalId
+            const rowClassName = [
+              'portal-row',
+              `portal-row--${risk.level.toLowerCase()}`,
+              `portal-row--${portal.status.toLowerCase()}`,
+              isSelected ? 'portal-row--selected' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')
 
             return (
-              <tr
-                key={portal.id}
-                className={`portal-row portal-row--${risk.level.toLowerCase()} portal-row--${status}`}
-              >
-                <th scope="row">{portal.name}</th>
+              <tr key={portal.id} className={rowClassName}>
+                <th scope="row">
+                  <button
+                    type="button"
+                    className="link-button"
+                    aria-current={isSelected ? 'true' : undefined}
+                    onClick={() => onSelectPortal(portal.id)}
+                  >
+                    {portal.name}
+                  </button>
+                </th>
                 <td>{portal.destinationWorld}</td>
                 <td className="num">{portal.energy}</td>
                 <td className="num">{portal.stability}</td>
                 <td className="num">{formatCollapseMinutes(portal.collapseMinutes)}</td>
                 <td className="num">{portal.creaturesInside}</td>
                 <td>
-                  <span className={`status status--${status}`}>{STATUS_LABELS[portal.status]}</span>
+                  <StatusBadge status={portal.status} />
                 </td>
                 <td>
                   <RiskBadge level={risk.level} score={risk.score} />
