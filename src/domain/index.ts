@@ -1,6 +1,6 @@
 export type { ActionAvailability, ActionResult, ExecuteActionOptions } from './action.ts'
 export { executePortalAction, getActionAvailability } from './actionEngine.ts'
-export type { PortalAction, PortalEvent } from './event.ts'
+export type { PortalAction, PortalEvent, PortalEventOutcome, PortalSnapshot } from './event.ts'
 export type { Portal, PortalStatus } from './portal.ts'
 export type { PortalRecommendation, RecommendationCode } from './recommendation.ts'
 export { getPortalRecommendation } from './recommendationEngine.ts'
