@@ -781,6 +781,209 @@ button:focus-visible,
   }
 }
 
+/* AI Worklog */
+
+.worklog {
+  display: grid;
+  gap: 24px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.worklog__header .section-title {
+  margin: 0;
+  font-size: 1.375rem;
+}
+
+.worklog__subtitle {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.worklog__block {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.worklog__heading {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.worklog__note {
+  margin: -6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.worklog__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 24px;
+}
+
+.worklog-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  /* start: карточки не растягиваются до высоты самой длинной. */
+  align-items: start;
+  gap: 12px;
+  margin: 0;
+}
+
+.worklog-fact {
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.worklog-fact dt {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.worklog-fact dd {
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+.worklog-fact__details {
+  margin: 8px 0 0;
+  padding-left: 1.1rem;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.worklog-stages {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.worklog-stage {
+  padding: 16px 20px;
+}
+
+.worklog-stage__title {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.worklog-stage__number {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.worklog-stage__roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 12px 24px;
+}
+
+.worklog-stage__role {
+  margin: 0 0 4px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.worklog-stage ul,
+.worklog-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.worklog-stage li + li,
+.worklog-list li + li {
+  margin-top: 4px;
+}
+
+.worklog-stage__details {
+  margin-top: 12px !important;
+  padding-top: 12px !important;
+  border-top: 1px dashed var(--border);
+  color: var(--text-muted);
+}
+
+.worklog-prompts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.worklog-prompt {
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--focus);
+  border-radius: 6px;
+}
+
+.worklog-prompt__stage {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.worklog-prompt blockquote {
+  margin: 4px 0 0;
+}
+
+.worklog-decisions {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 1.4rem;
+}
+
+.worklog-decisions__title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.worklog-decisions__text {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+}
+
+.worklog-issues {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.worklog-issue {
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--risk-high);
+  border-radius: 6px;
+}
+
+.worklog-issue__problem {
+  margin: 0;
+}
+
+.worklog-issue__resolution {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
 .history-list {
   display: grid;
   gap: 12px;

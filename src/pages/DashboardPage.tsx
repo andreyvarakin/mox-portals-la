@@ -5,12 +5,14 @@ import {
   getPortalSummary,
   type PortalCommand,
 } from '../application/index.ts'
+import { AiWorklog } from '../components/AiWorklog.tsx'
 import { AttentionList } from '../components/AttentionList.tsx'
 import { GlobalEventLog } from '../components/GlobalEventLog.tsx'
 import type { PendingConfirmation } from '../components/PortalActions.tsx'
 import { PortalDetails } from '../components/PortalDetails.tsx'
 import { PortalTable } from '../components/PortalTable.tsx'
 import { SummaryCards } from '../components/SummaryCards.tsx'
+import { aiWorklog } from '../content/aiWorklog.ts'
 import { demoPortals } from '../data/index.ts'
 import { getActionAvailability, type PortalAction } from '../domain/index.ts'
 
@@ -142,6 +144,8 @@ export function DashboardPage() {
         </section>
 
         <GlobalEventLog events={state.events} portals={state.portals} />
+
+        <AiWorklog worklog={aiWorklog} />
       </main>
     </div>
   )
