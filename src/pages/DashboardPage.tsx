@@ -11,9 +11,10 @@ import { GlobalEventLog } from '../components/GlobalEventLog.tsx'
 import type { PendingConfirmation } from '../components/PortalActions.tsx'
 import { PortalDetails } from '../components/PortalDetails.tsx'
 import { PortalTable } from '../components/PortalTable.tsx'
+import { ScenarioNav } from '../components/ScenarioNav.tsx'
 import { SummaryCards } from '../components/SummaryCards.tsx'
+import { getScenarioPortals, readDemoScenario } from '../components/demoScenario.ts'
 import { aiWorklog } from '../content/aiWorklog.ts'
-import { demoPortals } from '../data/index.ts'
 import { getActionAvailability, type PortalAction } from '../domain/index.ts'
 
 /**
@@ -31,9 +32,15 @@ function createCommand(portalId: string, action: PortalAction, confirmed?: boole
 }
 
 export function DashboardPage() {
+  // Сценарий выбирает только начальные данные: дальше состояние живёт обычным образом.
+  const scenario = readDemoScenario(window.location.search)
   // Редьюсер — сама applyPortalCommand: логика целиком в application layer.
-  // demoPortals — только начальные данные, дальше всё берётся из state.
-  const [state, dispatch] = useReducer(applyPortalCommand, demoPortals, createInitialPortalState)
+  // Начальный набор порталов — только seed, дальше всё берётся из state.
+  const [state, dispatch] = useReducer(
+    applyPortalCommand,
+    getScenarioPortals(scenario),
+    createInitialPortalState,
+  )
   // Выбор и незавершённое подтверждение — состояние интерфейса, в PortalAppState не попадают.
   const [selectedPortalId, setSelectedPortalId] = useState<string | null>(null)
   const [pendingConfirmation, setPendingConfirmation] = useState<PendingConfirmation | null>(null)
@@ -96,6 +103,7 @@ export function DashboardPage() {
           Контроль состояния межмировых порталов. Оцените риск и определите, какие объекты
           требуют внимания.
         </p>
+        <ScenarioNav scenario={scenario} />
       </header>
 
       <main className="dashboard">

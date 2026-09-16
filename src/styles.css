@@ -86,6 +86,67 @@ button:focus-visible,
   color: var(--text-muted);
 }
 
+/* Переключатель демо-сценария */
+
+.scenario {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 16px;
+}
+
+.scenario__label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.scenario__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scenario__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.scenario__link:hover {
+  color: var(--text);
+  border-color: var(--focus);
+}
+
+.scenario__link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.scenario__link--current {
+  color: var(--text);
+  font-weight: 600;
+  background: var(--selected-bg);
+  border-color: var(--focus);
+}
+
+.scenario__mark {
+  font-size: 0.8125rem;
+}
+
 .dashboard {
   display: grid;
   /* minmax(0, …): иначе широкая таблица растягивает колонку и всю страницу. */
