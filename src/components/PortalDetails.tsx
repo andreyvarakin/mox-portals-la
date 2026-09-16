@@ -19,6 +19,13 @@ const FACTOR_LABELS: [keyof RiskFactors, string][] = [
   ['collapseTime', 'Риск по времени'],
 ]
 
+/** Описание модели риска для пользователя. Балл считает calculateRisk, здесь только текст. */
+const RISK_WEIGHTS: [string, string][] = [
+  ['45%', 'риск низкой стабильности'],
+  ['30%', 'риск высокой энергии'],
+  ['25%', 'риск близкого схлопывания'],
+]
+
 interface PortalDetailsProps {
   /** undefined — портал не выбран или выбранного больше нет в списке. */
   portal: Portal | undefined
@@ -126,6 +133,32 @@ export function PortalDetails({
             </div>
           ))}
         </dl>
+
+        {/* Справка о модели риска. Считает по-прежнему только calculateRisk. */}
+        <details className="risk-help">
+          <summary className="risk-help__summary">Как считается риск</summary>
+          <div className="risk-help__body">
+            <dl className="risk-help__weights">
+              {RISK_WEIGHTS.map(([share, description]) => (
+                <div key={share} className="risk-help__weight">
+                  <dt>{share}</dt>
+                  <dd>{description}</dd>
+                </div>
+              ))}
+            </dl>
+            <p>
+              Время берётся на горизонте 120 минут: чем меньше его осталось, тем выше эта часть
+              балла.
+            </p>
+            <p>
+              Уровни: 0–29 — низкий, 30–59 — средний, 60–79 — высокий, 80–100 — критический.
+            </p>
+            <p>
+              Существа внутри не входят в технический балл риска, но влияют на допустимость
+              закрытия портала.
+            </p>
+          </div>
+        </details>
       </section>
 
       <section

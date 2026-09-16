@@ -600,6 +600,60 @@ button:focus-visible,
   background: var(--text-muted);
 }
 
+/* Справка о модели риска: вспомогательный блок, а не карточка. */
+
+.risk-help {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+}
+
+.risk-help__summary {
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.risk-help__summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.risk-help__body {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 12px 14px;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.risk-help__body p {
+  margin: 0;
+}
+
+.risk-help__weights {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+
+.risk-help__weight {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 8px;
+}
+
+.risk-help__weight dt {
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.risk-help__weight dd {
+  margin: 0;
+}
+
 .recommendation {
   padding: 12px 14px;
   background: var(--surface);

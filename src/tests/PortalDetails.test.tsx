@@ -142,6 +142,32 @@ describe('Выбор портала и карточка', () => {
 
 })
 
+describe('Объяснение расчёта риска', () => {
+  it('справка есть у выбранного портала и по умолчанию свёрнута', () => {
+    render(<App />)
+    selectFromTable('Врата Бездны')
+    const help = within(inspector()).getByText('Как считается риск').closest('details')
+
+    expect(help).toBeInTheDocument()
+    expect(help).not.toHaveAttribute('open')
+    expect(help?.tagName).toBe('DETAILS')
+  })
+
+  it('объясняет веса, горизонт времени, границы уровней и роль существ', () => {
+    render(<App />)
+    selectFromTable('Врата Бездны')
+    const help = within(inspector()).getByText('Как считается риск').closest('details') as HTMLElement
+
+    expect(within(help).getByText('45%').nextElementSibling).toHaveTextContent('стабильност')
+    expect(within(help).getByText('30%').nextElementSibling).toHaveTextContent('энерги')
+    expect(within(help).getByText('25%').nextElementSibling).toHaveTextContent('схлопывания')
+    expect(help).toHaveTextContent(/120 минут/)
+    expect(help).toHaveTextContent(/0–29/)
+    expect(help).toHaveTextContent(/80–100/)
+    expect(help).toHaveTextContent(/[Сс]ущества внутри не входят в технический балл риска/)
+  })
+})
+
 describe('PortalHistory', () => {
   const snapshot: PortalSnapshot = {
     status: 'OPEN',
