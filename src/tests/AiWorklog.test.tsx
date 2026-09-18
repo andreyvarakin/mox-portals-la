@@ -60,7 +60,7 @@ describe('AI Worklog на странице', () => {
       within(facts).getByText('Общее время разработки', { selector: 'dt' }).nextElementSibling,
     ).toHaveTextContent(/12 часов/)
     expect(within(facts).getByText('Период работы', { selector: 'dt' }).nextElementSibling).toHaveTextContent(
-      /16 сентября/,
+      /18 сентября/,
     )
   })
 

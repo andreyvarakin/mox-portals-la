@@ -48,7 +48,7 @@ export const aiWorklog: AiWorklogContent = {
   facts: [
     { label: 'AI-инструмент', value: 'Claude Code' },
     { label: 'Модель', value: 'Claude Opus 5' },
-    { label: 'Период работы', value: '14–16 сентября 2026' },
+    { label: 'Период работы', value: '14–18 сентября 2026' },
     {
       label: 'Общее время разработки',
       value: '≈ 12 часов активной работы',

@@ -6,7 +6,7 @@
 
 Тестовое задание MOX, вариант «Лаборатория нестабильных порталов».
 
-**Live demo:** будет добавлена после деплоя.
+**Live demo:** <https://andreyvarakin.github.io/mox-portals-la/>
 
 ## Сценарий
 
