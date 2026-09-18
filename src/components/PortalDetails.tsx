@@ -96,6 +96,9 @@ export function PortalDetails({
           <dt>Существа внутри</dt>
           <dd>{portal.creaturesInside}</dd>
         </dl>
+        <p className="inspector__hint">
+          Время до схлопывания в демонстрации статично: обратный отсчёт не идёт.
+        </p>
       </section>
 
       <section className="inspector__section">

@@ -42,8 +42,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Проект отдаётся из подкаталога репозитория.
-          VITE_BASE_PATH: /mox-portals-la/
+          # Проект отдаётся из подкаталога репозитория; имя берём из контекста,
+          # чтобы переименование репозитория не ломало пути к ресурсам.
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

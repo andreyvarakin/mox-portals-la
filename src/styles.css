@@ -509,6 +509,12 @@ button:focus-visible,
   color: var(--text-muted);
 }
 
+.inspector__hint {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
 .inspector__text {
   margin: 0;
 }

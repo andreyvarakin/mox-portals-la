@@ -28,6 +28,9 @@ const REQUIRED_STAGES = [
   'Действия и ограничения',
   'Интерфейс',
   'Отладка и проверка',
+  'Демо-состояния',
+  'README и чеклист проверки',
+  'Публикация',
   'Финальная проверка',
 ]
 
@@ -106,7 +109,7 @@ describe('Содержимое AI Worklog', () => {
   it('соответствует требованиям задания по составу', () => {
     expect(aiWorklog.stages.map((stage) => stage.title)).toEqual(REQUIRED_STAGES)
     expect(aiWorklog.prompts.length).toBeGreaterThanOrEqual(5)
-    expect(aiWorklog.prompts.length).toBeLessThanOrEqual(7)
+    expect(aiWorklog.prompts.length).toBeLessThanOrEqual(9)
     expect(aiWorklog.decisions.length).toBeGreaterThanOrEqual(3)
     expect(aiWorklog.decisions.length).toBeLessThanOrEqual(5)
     for (const stage of aiWorklog.stages) {
